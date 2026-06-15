@@ -155,4 +155,9 @@ app.UseSession();// Use session before routing
 app.UseRouting();
 app.UseAuthorization();
 app.MapControllerRoute(name: "default",pattern: "{controller=LoginUser}/{action=Login}/{id?}");
+app.MapControllerRoute(
+    name: "DepartmentMaster",
+    pattern: "{controller=DepartmentMaster}/{action=Index}/{id?}");
+
+app.Run();
 app.Run();

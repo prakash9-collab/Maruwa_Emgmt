@@ -23,6 +23,22 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/Tek-23202/source/repos/Maruwa_Emgmt/Maruwa_Emgmt/Views/DepartmentMaster/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudE1hc3RlclxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Tek-23202/source/repos/Maruwa_Emgmt/Maruwa_Emgmt/Views/DepartmentMaster/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudE1hc3RlclxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Tek-23202/source/repos/Maruwa_Emgmt/Maruwa_Emgmt/Views/DepartmentMaster/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudE1hc3RlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Tek-23202/source/repos/Maruwa_Emgmt/Maruwa_Emgmt/Views/DepartmentMaster/Print.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudE1hc3RlclxQcmludC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Tek-23202/source/repos/Maruwa_Emgmt/Maruwa_Emgmt/Views/EmpMaster/empList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wTWFzdGVyXGVtcExpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

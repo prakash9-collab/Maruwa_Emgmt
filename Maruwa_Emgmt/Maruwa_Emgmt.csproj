@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="itext7" Version="9.4.0" />
     <PackageReference Include="iTextSharp" Version="5.5.13.4" />
     <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="14.9.1" />

@@ -1,0 +1,165 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Maruwa_Emgmt.Models.DepartmentMaster
+@{
+    ViewBag.Title = "Edit Department";
+}
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        color: #34495e;
+        margin-bottom: 30px;
+        border-bottom: 3px solid #3498db;
+        padding-bottom: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+            .form-group input:focus,
+            .form-group select:focus {
+                outline: none;
+                border-color: #3498db;
+                box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+                background-color: #ecf0f1;
+            }
+
+    .required {
+        color: red;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ecf0f1;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #27ae60;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #229954;
+        }
+
+    .btn-secondary {
+        background-color: #95a5a6;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+</style>
+
+<div class="container">
+    <h2>Edit Department</h2>
+
+    @using (Html.BeginForm("Edit", "DepartmentMaster", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.DepartmentCode)
+            @Html.TextBoxFor(m => m.DepartmentCode, new { @readonly = "readonly" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.DepartmentName)
+            @Html.TextBoxFor(m => m.DepartmentName, new { @required = "required" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.JapanHead)
+            @Html.DropDownListFor(m => m.JapanHead, new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Yes", Value = "Y" },
+                new SelectListItem { Text = "No", Value = "N" }
+            })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Office)
+            @Html.TextBoxFor(m => m.Office, new { @required = "required" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.GotSection)
+            @Html.DropDownListFor(m => m.GotSection, new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Yes", Value = "Y" },
+                new SelectListItem { Text = "No", Value = "N" }
+            })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Prefix)
+            @Html.TextBoxFor(m => m.Prefix, new { @required = "required" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Remarks)
+            @Html.TextBoxFor(m => m.Remarks)
+        </div>
+
+        <div class="form-group">
+            <label>
+                @Html.CheckBoxFor(m => m.IsActive)
+                Active Status
+            </label>
+        </div>
+
+        @Html.HiddenFor(m => m.RecordNo)
+        @Html.HiddenFor(m => m.CreatedBy)
+        @Html.HiddenFor(m => m.CreatedOn)
+
+        <div class="form-actions">
+            <a href="@Url.Action("Index", "DepartmentMaster")" class="btn btn-secondary">Back to List</a>
+            <button type="submit" class="btn btn-primary">Update Department</button>
+        </div>
+    }
+</div>

@@ -1,0 +1,307 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Maruwa_Emgmt.Models.DepartmentMasterViewModel
+@{
+    ViewBag.Title = "Department Master";
+}
+
+<style>
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+    }
+
+    .employee-info {
+        font-size: 14px;
+        color: #333;
+    }
+
+        .employee-info span {
+            margin-right: 20px;
+        }
+
+    .btn-group {
+        margin-bottom: 20px;
+    }
+
+        .btn-group .btn {
+            margin-right: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+    .btn-primary {
+        background-color: #27ae60;
+        color: white;
+    }
+
+    .btn-secondary {
+        background-color: #95a5a6;
+        color: white;
+    }
+
+    .search-section {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    .filter-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 10px;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .filter-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .filter-group input, .filter-group select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+    .grid-container {
+        overflow-x: auto;
+    }
+
+    .grid-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .grid-table thead {
+            background-color: #34495e;
+            color: white;
+        }
+
+            .grid-table thead th {
+                padding: 12px;
+                text-align: left;
+                border: 1px solid #2c3e50;
+            }
+
+        .grid-table tbody td {
+            padding: 10px 12px;
+            border: 1px solid #ecf0f1;
+        }
+
+        .grid-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+    .action-buttons a, .action-buttons button {
+        margin-right: 5px;
+        padding: 5px 10px;
+        border-radius: 3px;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 12px;
+        border: none;
+    }
+
+    .btn-edit {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .btn-delete {
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    .pagination {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }
+
+        .pagination a, .pagination span {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .pagination .current {
+            background-color: #34495e;
+            color: white;
+        }
+
+    .alert {
+        padding: 12px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+</style>
+
+<div class="header">
+    <h2>Department Master</h2>
+    <div class="employee-info">
+        @if (Session["empcode"] != null)
+        {
+            <span><strong>Employee:</strong> @Session["empcode"] - @(Session["empname"] ?? "")</span>
+        }
+        <a href="@Url.Action("Logout", "Account")" class="btn btn-secondary">Sign Out</a>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="btn-group">
+    <button class="btn btn-primary" onclick="alert('Add New Department')">+ Add New Department</button>
+    <button class="btn btn-secondary" onclick="alert('Export to Excel')">Export to Excel</button>
+    <button class="btn btn-secondary" onclick="alert('Export to CSV')">Export to CSV</button>
+    <button class="btn btn-secondary" onclick="alert('Export to PDF')">Export to PDF</button>
+    <button class="btn btn-secondary" onclick="window.print()">Print</button>
+</div>
+
+<div class="search-section">
+    <div class="filter-row">
+        <div class="filter-group">
+            <label for="pageSize">Records Per Page:</label>
+            <select id="pageSize">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="search">Search:</label>
+            <input type="text" id="search" placeholder="Search..." value="@Model.SearchTerm" />
+        </div>
+        <div class="filter-group">
+            <label>&nbsp;</label>
+            <button class="btn btn-primary" onclick="performSearch()">Search</button>
+        </div>
+    </div>
+</div>
+
+<div class="grid-container">
+    <table class="grid-table">
+        <thead>
+            <tr>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>Dept Code</th>
+                <th>Dept Name</th>
+                <th>Japan Head</th>
+                <th>Office</th>
+                <th>Got Section</th>
+                <th>Prefix</th>
+                <th>Created By</th>
+                <th>Created On</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.Departments != null && ViewBag.Departments.Count > 0)
+            {
+                @foreach (var dept in ViewBag.Departments)
+                {
+                    <tr>
+                        <td class="action-buttons">
+                            <a href="@Url.Action("Edit", "DepartmentMaster", new { id = dept.RecordNo })" class="btn-edit">Edit</a>
+                        </td>
+                        <td class="action-buttons">
+                            <button class="btn-delete" onclick="deleteDept(@dept.RecordNo)">Delete</button>
+                        </td>
+                        <td>@dept.DepartmentCode</td>
+                        <td>@dept.DepartmentName</td>
+                        <td>@dept.JapanHead</td>
+                        <td>@dept.Office</td>
+                        <td>@dept.GotSection</td>
+                        <td>@dept.Prefix</td>
+                        <td>@dept.CreatedBy</td>
+                        <td>@(dept.CreatedOn.HasValue ? dept.CreatedOn.Value.ToString("yyyy-MM-dd") : "-")</td>
+                        <td>@(dept.IsActive ? "Active" : "Inactive")</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="11" style="text-align: center; padding: 20px;">No departments found.</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (ViewBag.TotalPages > 1)
+{
+    <div class="pagination">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            if (i == ViewBag.CurrentPage)
+            {
+                <span class="current">@i</span>
+            }
+            else
+            {
+                <a href="@Url.Action("Index", "DepartmentMaster", new { page = i, pageSize = ViewBag.CurrentPageSize })">@i</a>
+            }
+        }
+    </div>
+}
+
+<script>
+    function performSearch() {
+        var search = document.getElementById('search').value;
+        var pageSize = document.getElementById('pageSize').value;
+        window.location = '@Url.Action("Index", "DepartmentMaster")' + '?search=' + encodeURIComponent(search) + '&pageSize=' + pageSize;
+    }
+
+    function deleteDept(id) {
+        if (confirm('Are you sure you want to delete this department?')) {
+            fetch('@Url.Action("Delete", "DepartmentMaster")', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            })
+            .then(r => r.json())
+            .then(data => {
+                alert(data.message);
+                location.reload();
+            })
+            .catch(e => alert('Error: ' + e));
+        }
+    }
+</script>
